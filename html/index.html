@@ -252,12 +252,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Sales Chart -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Projects of the Month -->
-                <!-- ============================================================== -->
                 <div class="row">
                     <!-- Column -->
                     <div class="col-lg-8 d-flex align-items-stretch">
@@ -267,14 +261,6 @@
                                     <div>
                                         <h5 class="card-title">Users Data</h5>
                                     </div>
-                                    <!-- <div class="ms-auto">
-                                        <select class="form-select b-0">
-                                            <option selected="">January</option>
-                                            <option value="1">February</option>
-                                            <option value="2">March</option>
-                                            <option value="3">April</option>
-                                        </select>
-                                    </div> -->
                                     <div class="ms-auto">
                                         <select class="form-select b-0">
                                             <option selected="">January</option>
@@ -294,6 +280,18 @@
                                     
                                 </div>
                                 <div class="table-responsive mt-3 no-wrap">
+                                    <table class="table vm no-th-brd pro-of-month">
+                                        <thead>
+                                            <tr>
+                                                <th>UserID</th>
+                                                <th>Username</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dashboardUserTable"></tbody>
+                                    </table>
+                                </div>
+                                <!-- <div class="table-responsive mt-3 no-wrap">
                                     <table class="table vm no-th-brd pro-of-month">
                                         <thead>
                                             <tr>
@@ -351,7 +349,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                
+                                 -->
                                 
                                 <!-- <div class="table-responsive mt-3 no-wrap">
                                     <table class="table vm no-th-brd pro-of-month">
@@ -591,6 +589,125 @@
     <script src="../assets/node_modules/c3-master/c3.min.js"></script>
     <!-- Chart JS -->
     <script src="js/dashboard1.js"></script>
+    <!-- Your existing HTML content... -->
+
+<!-- Your existing HTML content... -->
+
+<!-- <script>
+    // This script should be placed at the end of your HTML file
+    $(document).ready(function () {
+        // Function to update the dashboard table with user data from local storage
+        function updateDashboardTable() {
+            var userData = JSON.parse(localStorage.getItem("userData")) || [];
+
+            // Clear existing content in the dashboard table
+            $("#dashboardUserTable").empty();
+
+            // Populate the dashboard table with user data
+            userData.forEach(user => {
+                const newRow = `
+                    <tr>
+                        <td>${user.userId}</td>
+                        <td>
+                            <h6>${user.username}</h6>
+                            <small class="text-muted">Email: ${user.email}</small>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger deleteUserButton" data-user-id="${user.userId}">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                $("#dashboardUserTable").append(newRow);
+            });
+
+            // Attach event handler to the "Delete" buttons in the dashboard table
+            $(".deleteUserButton").click(function () {
+                var userIdToDelete = $(this).data("user-id");
+
+                // Remove the corresponding row from the dashboard table
+                $(this).closest("tr").remove();
+
+                // Remove user data from local storage
+                var updatedData = userData.filter(user => user.userId !== userIdToDelete);
+                localStorage.setItem("userData", JSON.stringify(updatedData));
+            });
+        }
+
+        // Call the updateDashboardTable function on page load
+        updateDashboardTable();
+    });
+</script> -->
+<!-- Your existing HTML content... -->
+
+<!-- Your existing HTML content... -->
+
+<script>
+    $(document).ready(function () {
+        // Function to update the dashboard table with user data from local storage
+        function updateDashboardTable() {
+            var deletedUserIds = JSON.parse(localStorage.getItem("deletedUserIds")) || [];
+            var userData = JSON.parse(localStorage.getItem("userData")) || [];
+
+            // Clear existing content in the dashboard table
+            $("#dashboardUserTable").empty();
+
+            // Filter out deleted user IDs from the user data
+            var filteredUserData = userData.filter(user => !deletedUserIds.includes(user.userId));
+
+            // Populate the dashboard table with user data
+            filteredUserData.forEach(user => {
+                const newRow = `
+                    <tr>
+                        <td>${user.userId}</td>
+                        <td>
+                            <h6>${user.username}</h6>
+                            <small class="text-muted">Email: ${user.email}</small>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger deleteUserButton" data-user-id="${user.userId}">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                $("#dashboardUserTable").append(newRow);
+            });
+
+            // Attach event handler to the "Delete" buttons in the dashboard table
+            $(".deleteUserButton").click(function () {
+                var userIdToDelete = $(this).data("user-id");
+
+                // Add the deleted user ID to the array if not already present
+                if (!deletedUserIds.includes(userIdToDelete)) {
+                    deletedUserIds.push(userIdToDelete);
+                    localStorage.setItem("deletedUserIds", JSON.stringify(deletedUserIds));
+                }
+
+                // Remove the corresponding row from the dashboard table
+                $(this).closest("tr").remove();
+            });
+        }
+
+        // Call the updateDashboardTable function on page load
+        updateDashboardTable();
+
+        // Function to handle clearing local storage on refresh
+        function clearLocalStorageOnRefresh() {
+            if (performance.navigation.type === 1) {
+                // Clear local storage on refresh
+                localStorage.clear();
+            }
+        }
+
+        // Call the clearLocalStorageOnRefresh function on page load
+        clearLocalStorageOnRefresh();
+    });
+</script>
+
+<!-- Your existing HTML content... -->
+
+
+<!-- Your existing HTML content... -->
+
+    
 </body>
 
 </html>

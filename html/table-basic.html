@@ -386,7 +386,88 @@
     <script src="/html/js/adminuser.js"></script>
     <script src="../assets/node_modules/peity/jquery.peity.min.js"></script>
     <script src="../assets/node_modules/peity/jquery.peity.init.js"></script>
-    <script>
+    <!-- Your existing HTML content... -->
+
+<script>
+    $(document).ready(function () {
+    // Function to show the Add User modal
+    $("#addUserButton").click(function () {
+        $("#addUserModal").css("display", "block");
+    });
+
+    // Function to close the Add User modal
+    $(".close").click(function () {
+        $("#addUserModal").css("display", "none");
+    });
+
+    // Function to handle form submission in the Add User modal
+    $("#addUserForm").submit(function (e) {
+        e.preventDefault();
+
+        // Get values from the form
+        var userId = $("#addUserId").val();
+        var username = $("#addUsername").val();
+        var email = $("#addEmail").val();
+
+        // Check for duplicate user
+        if (!isDuplicateUser(userId, username, email)) {
+            // Append a new row to the table with the user details
+            var newRow = "<tr><td>" + userId + "</td><td>" + username + "</td><td>" + email + "</td></tr>";
+            $("#Userinsertion").append(newRow);
+
+            // Store user data in local storage
+            var userData = JSON.parse(localStorage.getItem("userData")) || [];
+            userData.push({ userId: userId, username: username, email: email });
+            localStorage.setItem("userData", JSON.stringify(userData));
+
+            // Close the modal
+            $("#addUserModal").css("display", "none");
+        } else {
+            // Display an error message or handle the case where the user is not unique
+            alert("User with the same ID, username, or email already exists!");
+        }
+    });
+
+    // Function to show the Delete User modal
+    $("#deleteUserButton").click(function () {
+        $("#deleteUserModal").css("display", "block");
+    });
+
+    // Function to close the Delete User modal
+    $(".close").click(function () {
+        $("#deleteUserModal").css("display", "none");
+    });
+
+    // Function to handle confirm deletion in the Delete User modal
+    $("#confirmDeleteButton").click(function () {
+        // Add logic for confirming and deleting the user
+        // For now, just remove the selected row
+        var userIdToDelete = $("#deleteUserId").val();
+        $("#Userinsertion").find("td:contains(" + userIdToDelete + ")").closest("tr").remove();
+
+        // Remove user data from local storage
+        var userData = JSON.parse(localStorage.getItem("userData")) || [];
+        var updatedData = userData.filter(user => user.userId !== userIdToDelete);
+        localStorage.setItem("userData", JSON.stringify(updatedData));
+
+        // Close the modal
+        $("#deleteUserModal").css("display", "none");
+    });
+
+    // Function to check if a user with the same ID, username, or email already exists
+    function isDuplicateUser(userId, username, email) {
+        var userData = JSON.parse(localStorage.getItem("userData")) || [];
+        return userData.some(user =>
+            user.userId === userId || user.username === username || user.email === email
+        );
+    }
+});
+
+</script>
+
+<!-- Your existing HTML content... -->
+
+    <!-- <script>
         $(document).ready(function () {
             // Function to show the Add User modal
             $("#addUserButton").click(function () {
@@ -439,7 +520,7 @@
     </script>
     
 
-    <!-- only for adding user  <script>
+     only for adding user  <script>
         $(document).ready(function () {
             // Function to show the Add User modal
             $("#addUserButton").click(function () {
@@ -486,7 +567,7 @@
                 $("#deleteUserModal").css("display", "none");
             });
         });
-    </script> -->
+    </script> --> 
 
 
 
