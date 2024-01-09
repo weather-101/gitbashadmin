@@ -62,7 +62,7 @@
         }
 
         form {
-            height: 350px;
+            height: 380px;
             max-width: 400px;
             margin: 40px auto;
             padding: 20px;
@@ -77,7 +77,11 @@
 
         label {
             display: block;
+            
             margin-bottom: 5px;
+            color: #ffffff;
+           /* For webkit-based browsers like Chrome, Safari */
+         
         }
 
         input,
@@ -109,12 +113,14 @@
         button {
             position: absolute;
             /* bottom: 20px; or any desired distance from the bottom */
+            bottom : 15px;
             left: 50%;
             transform: translateX(-50%);
             background-color: rgba(1, 1, 1, 1); /* original color */
             color: white;
             font-size: 16px;
             margin-top: 25px;
+            
             padding: 12px 24px;
             border: none;
             cursor: pointer;

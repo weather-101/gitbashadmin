@@ -59,7 +59,7 @@
             margin-top: 10px;
             border-radius: 5px;
             /* border: 2px solid white; */
-            background-color: rgba(10, 9, 9, 0.1);
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
@@ -153,6 +153,7 @@
             background-color: rgba(1, 1, 1, 1); /* original color */
             color: white;
             font-size: 16px;
+            margin-top: 30px;
             padding: 12px 24px;
             border: none;
             cursor: pointer;
@@ -160,6 +161,8 @@
             /* margin-bottom: 200px; */
             /* margin-top: 100px; */
         }
+
+        
 
        
         /* option {
@@ -199,6 +202,81 @@ option[value="user"] {
     right: 10px;
     transform: translateY(-50%);
     pointer-events: none;
+}
+
+/* forgot password style */
+/* Login container styling */
+.login-container {
+    /* Your login container styles */
+    /* ... */
+}
+
+/* Forgot password link styling */
+.forgot-password {
+     /* Center-align the text */
+    margin-top: 10px; /* Adjust margin as needed */
+    font-size: 14px; /* Font size for the text */
+}
+
+.forgot-password a {
+    text-decoration: none; /* Remove underline from the link */
+    color: #333; /* Default color */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+/* Change color on hover */
+.forgot-password a:hover {
+    color: #f00; /* Color change on hover */
+    cursor: pointer; /* Show pointer cursor on hover */
+    border-bottom: 1px solid #f00;
+}
+
+.password-reset-popup {
+    
+    backdrop-filter: blur(8px); /* Adjust the blur effect */
+    background-color: rgba(255, 255, 255, 0.5); /* Adjust the transparency */
+    padding: 10px; /* Optional: Add padding for better aesthetics */
+    border-radius: 5px; /* Optional: Add border-radius for rounded corners */
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px; /* Increase width as needed */
+    max-width: 80%; /* Limit maximum width */
+    background-color: #868383;
+    padding: 30px; /* Increase padding for better appearance */
+    border: 2px solid #ccc; /* Increase border width for better visibility */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    z-index: 999; /* Ensure it appears on top of other content */
+    text-align: center; /* Center-align text within the pop-up */
+}
+
+.password-reset-content h2 {
+    margin-bottom: 20px; /* Adjust spacing between heading and input */
+    font-size: 24px; /* Increase font size for the heading */
+}
+
+.password-reset-content input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px; /* Adjust spacing between input and button */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.password-reset-content button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.password-reset-content button:hover {
+    background-color: #0056b3;
 }
 
 
@@ -262,7 +340,23 @@ option[value="user"] {
             </div>
             
             <button type="submit" class="btn btn-primary">Login</button>
+
+        <div class="form-group">
+            <p class="forgot-password">
+                <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+            </p>
+        </div>
+
         </form>
+    </div>
+
+    <div class="password-reset-popup" id="passwordResetPopup">
+        <div class="password-reset-content">
+            <h2>Password Reset</h2>
+            <input type="email" placeholder="Enter your email" id="resetEmail">
+            <button onclick="submitEmail()">Submit</button>
+            <button class="close-popup" onclick="closePasswordResetPopup()">Close</button>
+        </div>
     </div>
 
     <!-- Bootstrap JavaScript Bundle -->
@@ -275,11 +369,41 @@ option[value="user"] {
             var role = document.getElementById('role').value;
             // Redirect logic goes here
             if (role === 'user') {
-                window.location.href = '/user-dashboard';
+                window.location.href = 'userdashboard/index.html';
             } else if (role === 'admin') {
                 window.location.href = '/admin-dashboard';
             }
         });
+
+    /*popup */
+    // Function to open password reset pop-up
+function openPasswordResetPopup() {
+    document.getElementById("passwordResetPopup").style.display = "block";
+}
+
+// Function to close password reset pop-up
+function closePasswordResetPopup() {
+    document.getElementById("passwordResetPopup").style.display = "none";
+}
+
+// Function to submit email (You can implement your logic here)
+function submitEmail() {
+    let email = document.getElementById("resetEmail").value;
+    // Your password reset logic using the email input
+    // This is just an example, replace it with your actual logic
+    alert("Password reset link sent to " + email);
+    closePasswordResetPopup(); // Close the pop-up after submitting
+}
+
+// Event listener to open the pop-up on "Forgot Password?" click
+document.getElementById("forgotPasswordLink").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the link from redirecting
+    openPasswordResetPopup();
+
+    var loginContainer = document.getElementById("loginContainer");
+    oginContainer.style.display = "none";
+});
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
