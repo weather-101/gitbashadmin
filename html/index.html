@@ -642,64 +642,60 @@
 <!-- Your existing HTML content... -->
 
 <script>
-    $(document).ready(function () {
-        // Function to update the dashboard table with user data from local storage
-        function updateDashboardTable() {
-            var deletedUserIds = JSON.parse(localStorage.getItem("deletedUserIds")) || [];
-            var userData = JSON.parse(localStorage.getItem("userData")) || [];
+   
+   $(document).ready(function () {
+    // Function to update the dashboard table with user data from local storage
+    function updateDashboardTable() {
+        var deletedUserIds = JSON.parse(localStorage.getItem("deletedUserIds")) || [];
+        var userData = JSON.parse(localStorage.getItem("userData")) || [];
 
-            // Clear existing content in the dashboard table
-            $("#dashboardUserTable").empty();
+        // Clear existing content in the dashboard table
+        $("#dashboardUserTable").empty();
 
-            // Filter out deleted user IDs from the user data
-            var filteredUserData = userData.filter(user => !deletedUserIds.includes(user.userId));
+        // Filter out deleted user IDs from the user data
+        var filteredUserData = userData.filter(user => !deletedUserIds.includes(user.userId));
 
-            // Populate the dashboard table with user data
-            filteredUserData.forEach(user => {
-                const newRow = `
-                    <tr>
-                        <td>${user.userId}</td>
-                        <td>
-                            <h6>${user.username}</h6>
-                            <small class="text-muted">Email: ${user.email}</small>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger deleteUserButton" data-user-id="${user.userId}">Delete</button>
-                        </td>
-                    </tr>
-                `;
-                $("#dashboardUserTable").append(newRow);
-            });
+        // Populate the dashboard table with user data
+        filteredUserData.forEach(user => {
+            const newRow = `
+                <tr>
+                    <td>${user.userId}</td>
+                    <td>
+                        <h6>${user.username}</h6>
+                        <small class="text-muted">Email: ${user.email}</small>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger deleteUserButton" data-user-id="${user.userId}">Delete</button>
+                    </td>
+                </tr>
+            `;
+            $("#dashboardUserTable").append(newRow);
+        });
 
-            // Attach event handler to the "Delete" buttons in the dashboard table
-            $(".deleteUserButton").click(function () {
-                var userIdToDelete = $(this).data("user-id");
+        // Attach event handler to the "Delete" buttons in the dashboard table
+        $(".deleteUserButton").click(function () {
+            var userIdToDelete = $(this).data("user-id");
 
-                // Add the deleted user ID to the array if not already present
-                if (!deletedUserIds.includes(userIdToDelete)) {
-                    deletedUserIds.push(userIdToDelete);
-                    localStorage.setItem("deletedUserIds", JSON.stringify(deletedUserIds));
-                }
+            // Remove the corresponding row from the dashboard table
+            $(this).closest("tr").remove();
 
-                // Remove the corresponding row from the dashboard table
-                $(this).closest("tr").remove();
-            });
-        }
+            // Add the deleted user ID to the array if not already present
+            if (!deletedUserIds.includes(userIdToDelete)) {
+                deletedUserIds.push(userIdToDelete);
+                localStorage.setItem("deletedUserIds", JSON.stringify(deletedUserIds));
 
-        // Call the updateDashboardTable function on page load
-        updateDashboardTable();
-
-        // Function to handle clearing local storage on refresh
-        function clearLocalStorageOnRefresh() {
-            if (performance.navigation.type === 1) {
-                // Clear local storage on refresh
-                localStorage.clear();
+                // Remove user data from local storage after delete action
+                var updatedUserData = userData.filter(user => user.userId !== userIdToDelete);
+                localStorage.setItem("userData", JSON.stringify(updatedUserData));
             }
-        }
+        });
+    }
 
-        // Call the clearLocalStorageOnRefresh function on page load
-        clearLocalStorageOnRefresh();
-    });
+    // Call the updateDashboardTable function on page load
+    updateDashboardTable();
+});
+
+
 </script>
 
 <!-- Your existing HTML content... -->

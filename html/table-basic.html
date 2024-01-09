@@ -389,7 +389,7 @@
     <!-- Your existing HTML content... -->
 
 <script>
-    $(document).ready(function () {
+ $(document).ready(function () {
     // Function to show the Add User modal
     $("#addUserButton").click(function () {
         $("#addUserModal").css("display", "block");
@@ -405,9 +405,18 @@
         e.preventDefault();
 
         // Get values from the form
-        var userId = $("#addUserId").val();
+        var userIdInput = $("#addUserId").val();
         var username = $("#addUsername").val();
         var email = $("#addEmail").val();
+
+        // Check if userId is a valid number
+        if (isNaN(userIdInput)) {
+            alert("Please enter a valid number for UserID.");
+            return;
+        }
+
+        // Parse userId as an integer
+        var userId = parseInt(userIdInput);
 
         // Check for duplicate user
         if (!isDuplicateUser(userId, username, email)) {
@@ -447,7 +456,7 @@
 
         // Remove user data from local storage
         var userData = JSON.parse(localStorage.getItem("userData")) || [];
-        var updatedData = userData.filter(user => user.userId !== userIdToDelete);
+        var updatedData = userData.filter(user => user.userId !== parseInt(userIdToDelete));
         localStorage.setItem("userData", JSON.stringify(updatedData));
 
         // Close the modal
@@ -461,7 +470,21 @@
             user.userId === userId || user.username === username || user.email === email
         );
     }
+
+    // Function to synchronize table with local storage data
+    function syncTableWithData() {
+        var userData = JSON.parse(localStorage.getItem("userData")) || [];
+        userData.forEach(user => {
+            var newRow = "<tr><td>" + user.userId + "</td><td>" + user.username + "</td><td>" + user.email + "</td></tr>";
+            $("#Userinsertion").append(newRow);
+        });
+    }
+
+    // Synchronize table with local storage data on page load
+    syncTableWithData();
 });
+
+
 
 </script>
 
