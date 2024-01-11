@@ -1,5 +1,5 @@
 /* Custom Dropdown */
-.custom-dropdown {
+/* .custom-dropdown {
     position: relative;
     display: inline-block;
    }
@@ -24,9 +24,9 @@
    
    .custom-dropdown:hover .dropdown-icon {
     border-left: 1px solid #b5b5b5;
-   }
+   } */
    
-   .dropdown-icon {
+   /* .dropdown-icon {
     position: absolute;
     top: 50%;
     right: 0;
@@ -35,8 +35,8 @@
     transform: translateY(-50%);
     cursor: pointer;
    }
-   
-   /* Weather Container */
+    */
+   /* Weather Container
    .weather-container {
     display: flex;
     justify-content: space-around;
@@ -62,6 +62,6 @@
     font-size: 24px;
     font-weight: bold;
     margin-top: 10px;
-   }
+   } */
 
    
